@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Battleship Game</title>
+</head>
+<body>
+  <header>
+    <h1>Battleship</h1>
+  </header>
+
+  <main>
+    <div id="game-message">Your turn! Attack the enemy board.</div>
+
+    <section class="boards-container">
+      <div class="board-section">
+        <h2>Your Board</h2>
+        <div id="player-board" class="gameboard"></div>
+      </div>
+
+      <div class="board-section">
+        <h2>Computer's Board</h2>
+        <div id="computer-board" class="gameboard"></div>
+      </div>
+    </section>
+
+    <button id="restart-button">Restart Game</button>
+  </main>
+
+  <script type="module" src="./src/index.js"></script>
+</body>
+</html>
