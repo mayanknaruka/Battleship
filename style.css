@@ -1,0 +1,201 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #0d1b2a;
+  color: #cce4f7;
+  text-align: center;
+  padding: 30px 15px;
+  min-height: 100vh;
+}
+
+header h1 {
+  font-size: 2rem;
+  letter-spacing: 4px;
+  color: #7ec8e3;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+#game-message {
+  margin: 14px auto;
+  font-size: 16px;
+  color: #a8d8ea;
+  background: #1a2e42;
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 20px;
+  border: 1px solid #2e4a62;
+}
+
+.boards-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 24px auto;
+}
+
+.board-section h2 {
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  color: #7ec8e3;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+/* Board wrapper holds col labels + (row labels + grid) */
+.board-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.col-labels {
+  display: flex;
+  align-items: center;
+  margin-left: 0;
+}
+
+.col-labels .corner {
+  width: 22px;
+  flex-shrink: 0;
+}
+
+.col-labels span {
+  width: 34px;
+  text-align: center;
+  font-size: 0.72rem;
+  color: #7ec8e3;
+  letter-spacing: 1px;
+}
+
+.board-rows {
+  display: flex;
+  align-items: flex-start;
+}
+
+.row-labels {
+  display: flex;
+  flex-direction: column;
+  margin-right: 2px;
+}
+
+.row-labels span {
+  height: 34px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 0.72rem;
+  color: #7ec8e3;
+  padding-right: 3px;
+}
+
+.gameboard {
+  display: grid;
+  grid-template-columns: repeat(10, 34px);
+  grid-template-rows: repeat(10, 34px);
+  gap: 3px;
+}
+
+.cell {
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 4px;
+  background: #1e3a52;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  position: relative;
+}
+
+/* Subtle dot in center for empty cells */
+.cell::after {
+  content: '';
+  display: block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #2d5472;
+  margin: auto;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cell:hover:not(:disabled) {
+  background: #27496d;
+  transform: scale(1.08);
+}
+
+/* Player's own ships - light grey like image */
+.cell.ship {
+  background: #4a6e8a;
+}
+
+.cell.ship::after {
+  display: none;
+}
+
+/* Hit - orange/red like image */
+.cell.hit {
+  background: #e8622a;
+  cursor: default;
+}
+
+.cell.hit::after {
+  background: #fff;
+  width: 8px;
+  height: 8px;
+}
+
+/* Miss - light blue dot like image */
+.cell.miss {
+  background: #1e3a52;
+  cursor: default;
+}
+
+.cell.miss::after {
+  background: #7ec8e3;
+  width: 7px;
+  height: 7px;
+}
+
+/* Disable clicks on already attacked cells */
+.cell:disabled {
+  cursor: default;
+  transform: none;
+}
+
+#restart-button {
+  margin-top: 10px;
+  padding: 12px 30px;
+  border: 2px solid #2e6b9e;
+  border-radius: 8px;
+  background: #1a3a55;
+  color: #7ec8e3;
+  font-size: 15px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+#restart-button:hover {
+  background: #2e6b9e;
+  color: #fff;
+}
+
+/* Win/lose message highlight */
+#game-message.win {
+  color: #2ecc71;
+  border-color: #2ecc71;
+}
+
+#game-message.lose {
+  color: #e8622a;
+  border-color: #e8622a;
+}

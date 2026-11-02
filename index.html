@@ -1,32 +1,64 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Battleship Game</title>
+  <title>Battleship</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   <header>
-    <h1>Battleship</h1>
+    <h1>⚓ BATTLESHIP</h1>
   </header>
 
   <main>
     <div id="game-message">Your turn! Attack the enemy board.</div>
 
     <section class="boards-container">
+
       <div class="board-section">
-        <h2>Your Board</h2>
-        <div id="player-board" class="gameboard"></div>
+        <h2>MY FLEET</h2>
+        <div class="board-wrapper">
+          <div class="col-labels">
+            <div class="corner"></div>
+            <span>A</span><span>B</span><span>C</span><span>D</span>
+            <span>E</span><span>F</span><span>G</span><span>H</span>
+            <span>I</span><span>J</span>
+          </div>
+          <div class="board-rows">
+            <div class="row-labels">
+              <span>1</span><span>2</span><span>3</span><span>4</span>
+              <span>5</span><span>6</span><span>7</span><span>8</span>
+              <span>9</span><span>10</span>
+            </div>
+            <div id="player-board" class="gameboard"></div>
+          </div>
+        </div>
       </div>
 
       <div class="board-section">
-        <h2>Computer's Board</h2>
-        <div id="computer-board" class="gameboard"></div>
+        <h2>ENEMY WATERS</h2>
+        <div class="board-wrapper">
+          <div class="col-labels">
+            <div class="corner"></div>
+            <span>A</span><span>B</span><span>C</span><span>D</span>
+            <span>E</span><span>F</span><span>G</span><span>H</span>
+            <span>I</span><span>J</span>
+          </div>
+          <div class="board-rows">
+            <div class="row-labels">
+              <span>1</span><span>2</span><span>3</span><span>4</span>
+              <span>5</span><span>6</span><span>7</span><span>8</span>
+              <span>9</span><span>10</span>
+            </div>
+            <div id="computer-board" class="gameboard"></div>
+          </div>
+        </div>
       </div>
+
     </section>
 
-    <button id="restart-button">Restart Game</button>
+    <button id="restart-button">🔄 New Game</button>
   </main>
 
   <script type="module" src="./src/index.js"></script>
