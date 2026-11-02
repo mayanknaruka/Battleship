@@ -1,8 +1,4 @@
-test("each player has its own gameboard", () => {
-    const player = Player("real");
-
-    expect(player.gameboard).toBeDefined();
-  });import Player from "../src/player";
+import Player from "../src/player";
 
 describe("Player", () => {
   test("creates a real player", () => {

@@ -7,29 +7,54 @@ function GameController() {
   let gameOver = false;
   let winner = null;
 
-  // Predetermined ship positions
-  const fleet = [
-    { length: 5, row: 0, col: 0 },
-    { length: 4, row: 2, col: 0 },
-    { length: 3, row: 4, col: 0 },
-    { length: 3, row: 6, col: 0 },
-    { length: 2, row: 8, col: 0 },
-  ];
+  // Ships: [length, ...]
+  const shipLengths = [5, 4, 3, 3, 2];
 
-  function placeFleet(gameboard) {
-    fleet.forEach((ship) => {
-      const coordinates = [];
+  function placeFleetRandom(gameboard) {
+    shipLengths.forEach((length) => {
+      let placed = false;
 
-      for (let i = 0; i < ship.length; i++) {
-        coordinates.push([ship.row, ship.col + i]);
+      while (!placed) {
+        const isHorizontal = Math.random() < 0.5;
+        const row = Math.floor(Math.random() * 10);
+        const col = Math.floor(Math.random() * 10);
+
+        const coordinates = [];
+        let valid = true;
+
+        for (let i = 0; i < length; i++) {
+          const r = isHorizontal ? row : row + i;
+          const c = isHorizontal ? col + i : col;
+
+          if (r >= 10 || c >= 10) {
+            valid = false;
+            break;
+          }
+
+          coordinates.push([r, c]);
+        }
+
+        if (!valid) continue;
+
+        // Check no overlap with existing ships
+        const hasOverlap = coordinates.some((coord) => {
+          const key = coord.join(",");
+          return gameboard.ships.some((_, idx) => {
+            // Check via getCellStatus
+            return gameboard.getCellStatus(coord) === "ship";
+          });
+        });
+
+        if (hasOverlap) continue;
+
+        gameboard.placeShip(length, coordinates);
+        placed = true;
       }
-
-      gameboard.placeShip(ship.length, coordinates);
     });
   }
 
-  placeFleet(player.gameboard);
-  placeFleet(computer.gameboard);
+  placeFleetRandom(player.gameboard);
+  placeFleetRandom(computer.gameboard);
 
   function computerAttack() {
     const availableCoordinates = [];
