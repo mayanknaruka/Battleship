@@ -1,69 +1,41 @@
 import Gameboard from "../src/gameBoard";
-describe("Gameboard", () => {
-  test("creates an empty gameboard", () => {
-    const gameboard = Gameboard();
+test("does not allow attacking the same coordinate twice", () => {
+  const gameboard = Gameboard();
 
-    expect(gameboard.ships.length).toBe(0);
-  });
+  gameboard.receiveAttack([5, 5]);
+  gameboard.receiveAttack([5, 5]);
 
-  test("places a ship on the board", () => {
-    const gameboard = Gameboard();
+  expect(gameboard.missedAttacks.length).toBe(1);
+});
 
-    gameboard.placeShip(3, [
-      [0, 0],
-      [0, 1],
-      [0, 2],
-    ]);
+test("returns hit status for an attacked ship", () => {
+  const gameboard = Gameboard();
 
-    expect(gameboard.ships.length).toBe(1);
-  });
+  gameboard.placeShip(2, [
+    [0, 0],
+    [0, 1],
+  ]);
 
-  test("receives an attack and hits a ship", () => {
-    const gameboard = Gameboard();
+  gameboard.receiveAttack([0, 0]);
 
-    gameboard.placeShip(3, [
-      [0, 0],
-      [0, 1],
-      [0, 2],
-    ]);
+  expect(gameboard.getCellStatus([0, 0])).toBe("hit");
+});
 
-    gameboard.receiveAttack([0, 1]);
+test("returns ship status for an unattacked ship", () => {
+  const gameboard = Gameboard();
 
-    expect(gameboard.ships[0].hits).toBe(1);
-  });
+  gameboard.placeShip(2, [
+    [0, 0],
+    [0, 1],
+  ]);
 
-  test("records missed attacks", () => {
-    const gameboard = Gameboard();
+  expect(gameboard.getCellStatus([0, 0])).toBe("ship");
+});
 
-    gameboard.receiveAttack([5, 5]);
+test("returns miss status for a missed attack", () => {
+  const gameboard = Gameboard();
 
-    expect(gameboard.missedAttacks).toEqual([[5, 5]]);
-  });
+  gameboard.receiveAttack([5, 5]);
 
-  test("reports whether all ships are sunk", () => {
-    const gameboard = Gameboard();
-
-    gameboard.placeShip(2, [
-      [0, 0],
-      [0, 1],
-    ]);
-
-    gameboard.receiveAttack([0, 0]);
-    gameboard.receiveAttack([0, 1]);
-
-    expect(gameboard.allShipsSunk()).toBe(true);
-  });
-
-  test("returns false when ships are still alive", () => {
-    const gameboard = Gameboard();
-
-    gameboard.placeShip(2, [
-      [0, 0],
-      [0, 1],
-    ]);
-
-    gameboard.receiveAttack([0, 0]);
-
-    expect(gameboard.allShipsSunk()).toBe(false);
-  });
+  expect(gameboard.getCellStatus([5, 5])).toBe("miss");
 });

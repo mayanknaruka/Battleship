@@ -3,6 +3,7 @@ import Ship from "./ship";
 function Gameboard() {
   const ships = [];
   const missedAttacks = [];
+  const attacksReceived = [];
   const board = new Map();
 
   function placeShip(length, coordinates) {
@@ -16,7 +17,21 @@ function Gameboard() {
     });
   }
 
+  function hasBeenAttacked(coordinate) {
+    const key = coordinate.join(",");
+
+    return attacksReceived.some(
+      (attack) => attack.join(",") === key
+    );
+  }
+
   function receiveAttack(coordinate) {
+    if (hasBeenAttacked(coordinate)) {
+      return "already-attacked";
+    }
+
+    attacksReceived.push(coordinate);
+
     const key = coordinate.join(",");
 
     if (board.has(key)) {
@@ -31,6 +46,16 @@ function Gameboard() {
     return "miss";
   }
 
+  function getCellStatus(coordinate) {
+    const key = coordinate.join(",");
+
+    if (hasBeenAttacked(coordinate)) {
+      return board.has(key) ? "hit" : "miss";
+    }
+
+    return board.has(key) ? "ship" : "empty";
+  }
+
   function allShipsSunk() {
     return ships.every((ship) => ship.isSunk());
   }
@@ -41,6 +66,8 @@ function Gameboard() {
     placeShip,
     receiveAttack,
     allShipsSunk,
+    getCellStatus,
+    hasBeenAttacked,
   };
 }
 
